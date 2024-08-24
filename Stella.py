@@ -1,40 +1,36 @@
 import os
+
+# Suppress TensorFlow and gRPC logs
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress TensorFlow logs (errors only)
+os.environ['GRPC_VERBOSITY'] = 'ERROR'    # Suppress gRPC logs
+os.environ['GRPC_TRACE'] = ''             # Disable gRPC tracing
+
+# Now import the rest of your libraries
 import shutil
 import json
 import requests
 from dotenv import load_dotenv
+from gemini import generate
+
+import absl.logging
+absl.logging.set_verbosity(absl.logging.ERROR)
+
+import logging
+logging.getLogger('tensorflow').setLevel(logging.ERROR)
+logging.getLogger('grpc').setLevel(logging.ERROR)
 
 load_dotenv()
 
 # Path for disk space and cleanup functions
 path = "C:\\"
 
-
-
 def greetings():
     print("Welcome to Stella!")
     greets = input("How was your day? ")
-    match greets:
-        case "good":
-            print("Good to hear!")
-        case "bad":
-            print("I'm sorry to hear that.")
-        case "okay":
-            print("Hope it goes better from here on out.")
-        case "great":
-            print("That's great to hear!")
-        case "awesome":
-            print("I'm glad to hear that.")
-        case "lovely":
-            print("That's lovely to hear.")
-        case "i just woke up":
-            print("Good morning!")
-        case _:
-            print("I'm sorry, I didn't understand your response.")
-            print("Please try again.")
-            greetings()
-
-
+    if "how about yours" in greets.lower():
+        print("I'm an AI, so I don't have days, but I'm here to help you!")
+    else:
+        print(generate(greets) + "\n\n")
 
 
 def weather():
