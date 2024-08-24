@@ -5,7 +5,7 @@
 
 
 ## Features
--AI Greeting using GEMINI.
+- AI Greeting using GEMINI.
 
 - Desktop Cleanup (With UNDO)
 - Weather Information
